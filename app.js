@@ -29,8 +29,8 @@ let list = document.querySelector('.list')
         const html = taskList.map(function(item) {
             return `<li>
             <input type="checkbox"/>
-                ${item.task}
-                <button>&times;<button/>
+                <span>${item.task}</span>
+                <button>&times;</button>
             </li>`
         }).join("")
         console.log(html);
