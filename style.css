@@ -8,17 +8,49 @@ body{
 }
 .container{
     width: 30%;
-    height: 50vh;
+    height: 100vh;
     background-color: antiquewhite;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    place-items: center;
+    
+    display: block;
     margin: auto;
+    
     margin-top: 10%;
     border-radius: 25px;
 }
 h1{
+    text-align: center;
     color: black;
     margin: 20px;
+}
+.rakib{
+    text-align: center;
+}
+
+.input{
+    
+    padding:15px;
+}
+.btn{
+    padding: 15px;
+}
+svg{
+     width: 25px;
+     height: 20px;
+}
+.list{
+    text-align: center;
+    padding: 8px;
+    background-color: burlywood;
+    width: 50%;
+    margin: c;
+    margin: auto;
+    margin-top: 6px;
+}
+li{
+    
+     text-align: left;
+     padding: 4px;
+     background-color: aliceblue;
+     border: 1px solid;
+     list-style: none;
 }
