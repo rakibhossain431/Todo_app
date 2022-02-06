@@ -18,7 +18,7 @@ body{
 
 }
 .container{
-    width: 36%;
+    width: 46%;
     height: 100vh;
     /* background-color: aliceblue; */
     
@@ -31,7 +31,7 @@ body{
 h1{
     text-align: center;
     color: black;
-    margin: 20px;
+    margin-bottom: 20px;
     font-size: 45px;
 }
 .rakib{
@@ -43,14 +43,16 @@ h1{
 }
 
 .input{
+    width: 71%;
     background-color: rgb(29, 28, 28);
-    padding:15px 40px;
+    padding:10px;
     color: white;
     font-size: 20px;
 }
 .btn{
+    width: 28%;
     background-color: rgb(31, 29, 29);
-    padding:15px 40px;
+    padding:10px;
     color: white;
     font-size: 20px;
 }
@@ -62,7 +64,6 @@ svg{
     text-align: center;
     background-color: burlywood;
     width: 100%;
-    margin: c;
     margin: auto;
     margin-top: 6px;
 }
@@ -71,10 +72,12 @@ li{
     text-align: left;
     padding: 4px;
      background-color: aliceblue;
-     border: 1px solid;
+     border-bottom: 1px solid;
      list-style: none;
-     padding: 10px 40px;
+     padding: 10px;
      background-color: rgb(31, 29, 29);
      color: white;
      font-size: 20px;
+     
+     
 }
