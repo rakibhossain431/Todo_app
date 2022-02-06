@@ -1,13 +1,5 @@
 let SubmitButton = document.querySelector('.rakib')
 let list = document.querySelector('.list')
-     
-       
-    
-    // SubmitButton.addEventListener('submit', function(e) {
-    //     e.preventDefault();
-    //     const inputData = e.target.insert.value;
-    //     console.log(inputData)
-    // })
     const taskList = [];
     function hendlSubmit(e){
 
@@ -21,10 +13,6 @@ let list = document.querySelector('.list')
         }
         taskList.push(task);
         localStoragData();
-        
-
-        //  e.target.insert.value = "";
-        // amar icca ami jeta use kori reset/"";
          e.target.reset();
 
         const html = taskList.map(function(item) {
@@ -39,9 +27,6 @@ let list = document.querySelector('.list')
         console.log(html);
 
         list.innerHTML = html;
-
-
-
          
     }
         function localStoragData(){
