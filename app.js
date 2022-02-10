@@ -87,5 +87,9 @@ let list = document.querySelector('.list')
 
                 if(e.target.matches('button')){
                     e.target.closest('li').remove()
+
+            const tastsFromLs = JSON.parse(localStorage.getItem('tasks'));
+            console.log(tastsFromLs)
+
                 }
     });
