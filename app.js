@@ -1,95 +1,105 @@
-let SubmitButton = document.querySelector('.rakib')
-let list = document.querySelector('.list')
+const SubmitButton = document.querySelector('.form')
+const tasksList = document.querySelector('.tasks-list')
 
-    let taskList = [];
-    function hendlSubmit(e){
+tasksListArry = []
 
-        e.preventDefault();
-        const inputData =  e.target.insert.value;
+function hendlSubmit(e){
+    e.preventDefault();
+    
+const inputData = e.target.insert.value;
+
+    if(!e.target.insert.value) return;
+    const task = {
+        id : Date.now(),
+        task:inputData,
+        isCompleted:false
         
-        const task = {
-            id: Date.now(),
-            task:inputData,
-            isCompleted: false,
-        }
-        taskList.push(task);
-        // console.log(taskList);
-         e.target.reset();
-         list.dispatchEvent(new CustomEvent("itemsUpdated"))
-        
-
     }
-            
-        function addHtmlForListItem(items) {
-                // Optional chaining
-                // Sort circut Operator || Logical operrator
-                // Sort circutint Operator
-            
-                return Array.isArray(items ) && items?.map(element => {
-             
-                   return `<li>
-                     <input type="checkbox" />
-                    
-                    ${element.task}
-                    
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
-                     </path></svg>
-                     <button value="${element.id}"> &times;</button>
-                 </li>`
-              
-                }).join(" ") 
+    // e.target.insert.value = "";
+    tasksListArry.unshift(task)
+    
+    e.target.reset();
+    tasksList.dispatchEvent(new CustomEvent("updateTasks"))
+}
+    function displayTasks(){
+        const html = tasksListArry.map(
+            (item) =>  ` <li>
+            <label id="${item.id}" class="todo-left ${item.isCompleted && "completed"}" for="item-${item.id}">
+            <input type="checkbox" id="item-${item.id}" ${item.isCompleted && "checked"} value="${item.id}" />
+            ${item.task}
+            </label>
 
-          
-        }
-        function displayTasks() {
-             
-            const html = addHtmlForListItem(taskList);
-            
-             
-             list.innerHTML = html;
-        }
+            <button type="button" class="edit" value="${item.id}">
+            <svg xmlns="http://www.w3.org/2000/svg" class="edit-icon h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1"
+                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+              />
+            </svg>
+          </button>
 
-         function saveItemIntoLocalStorage() {
-            localStorage.setItem('tasks', JSON.stringify(taskList))
-        }
+          <button type="button" class="delete" value="${item.id}">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
 
-         function displayTasksFromLocalStorage() {
-            
-            const tastsFromLs = JSON.parse(localStorage.getItem('tasks'));
-            
+                 
+            </li>`
+        ). join("")
+        
+        tasksList.innerHTML = html;
+    }
 
+    function saveTasksIntoLocalStorage(){
+        localStorage.setItem("tasksListArry", JSON.stringify(tasksListArry))
+    }
 
-         const html = addHtmlForListItem(tastsFromLs);
+    function displayTasksFromLocalStorage() {
+        const saveData = JSON.parse(localStorage.getItem("tasksListArry"));
 
-            list.innerHTML = html;  
-        }
-        displayTasksFromLocalStorage();
-
-
-        function deletiteme(id) {
-
-                const existingTasks = [...list.querySelectorAll('li')];
-
-                const newItem = existingTasks.map(function(item){
-                     item.querySelector('button').value != id
-                })
-                console.log(newItem);
-
+       if(Array.isArray(saveData) && saveData.length > 0){
+        //    tasks = saveData
+        // saveData.forEach((item) => tasksListArry.push(item))
+        tasksListArry.push(...saveData)
+           tasksList.dispatchEvent(new CustomEvent("updateTasks"))
+           
         }
         
-    // Event
-    SubmitButton.addEventListener('submit', hendlSubmit);   
-    list.addEventListener('itemsUpdated', displayTasks);
-    list.addEventListener('itemsUpdated', saveItemIntoLocalStorage);
-    list.addEventListener('click', function(e) {
-        console.log(e.target.matches('button'));
+    }
+    
+    
+    function conplitedTasks(id){
+        console.log(id)
+        const clickItem = tasksListArry.find((item) => item.id ===id)
+        clickItem.isCompleted =! clickItem.isCompleted
+        tasksList.dispatchEvent(new CustomEvent("updateTasks"))
+    }
+    
+    function deleteTasks(id){
+        
+        const deleteItem = tasksListArry.filter((item) => item.id !== id)
+        tasksListArry = deleteItem
+        tasksList.dispatchEvent(new CustomEvent("updateTasks"))
+   }
 
-                if(e.target.matches('button')){
-                    e.target.closest('li').remove()
 
-            const tastsFromLs = JSON.parse(localStorage.getItem('tasks'));
-            console.log(tastsFromLs)
+    SubmitButton.addEventListener('submit', hendlSubmit);
+    tasksList.addEventListener("updateTasks", displayTasks )
+    tasksList.addEventListener("updateTasks", saveTasksIntoLocalStorage)
 
-                }
-    });
+    tasksList.addEventListener('click', (e) => {
+        
+       const id =  parseInt(e.target.id) || parseInt(e.target.value)
+        if(e.target.matches("label.todo-left") || e.target.matches("input")){
+            conplitedTasks(id)
+        } 
+        if(e.target.closest(".delete")){
+            deleteTasks(parseInt(e.target.closest(".delete").value))
+        }
+       
+    })
+
+    displayTasksFromLocalStorage()
