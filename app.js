@@ -85,6 +85,12 @@ const inputData = e.target.insert.value;
         tasksList.dispatchEvent(new CustomEvent("updateTasks"))
    }
 
+   function editeTasks(id){
+       const editItem =  tasksListArry.find((item) => item.id ===id)
+      const r =  SubmitButton.querySelector(".input").value = editItem.task
+       console.log(SubmitButton.querySelector(".input").value)
+   }
+   
 
     SubmitButton.addEventListener('submit', hendlSubmit);
     tasksList.addEventListener("updateTasks", displayTasks )
@@ -98,6 +104,9 @@ const inputData = e.target.insert.value;
         } 
         if(e.target.closest(".delete")){
             deleteTasks(parseInt(e.target.closest(".delete").value))
+        }
+        if(e.target.closest(".edit")){
+            editeTasks(parseInt(e.target.closest(".edit").value))
         }
        
     })
